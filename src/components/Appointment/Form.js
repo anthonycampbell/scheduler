@@ -16,6 +16,14 @@ export default function Form(props) {
     props.onCancel();
   }
 
+  const save = function (){
+    if (interviewer){
+      props.onSave(student, interviewer)
+    } else {
+      console.log('must select interviewer');
+    }
+  }
+
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
@@ -38,7 +46,7 @@ export default function Form(props) {
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger message={"Cancel appointment?"} onClick={cancel}>Cancel</Button>
-          <Button confirm message={"Save appointment?"} onClick={props.onSave}>Save</Button>
+          <Button confirm message={"Save appointment?"} onClick={save}>Save</Button>
         </section>
       </section>
     </main>
