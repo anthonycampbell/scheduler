@@ -34,14 +34,23 @@ export default function Application(props) {
           ...state.appointments,
           [id]: appointment
         };
-        setState(prev => {
-          return {
-            ...prev,
-            appointments: {
-              ...appointments
-            }
-          }
-        });
+        setState(prev => { return { ...prev, appointments } });
+        return res;
+      });
+  }
+
+  function cancelInterview(id) {
+    return Axios.delete(`http://localhost:8001/api/appointments/${id}`)
+      .then((res) => {
+        const appointment = {
+          ...state.appointments[id],
+          interview: null
+        };
+        const appointments = {
+          ...state.appointments,
+          [id]: appointment
+        };
+        setState(prev => { return { ...prev, appointments } });
         return res;
       });
   }
@@ -56,6 +65,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={dailyInterviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
