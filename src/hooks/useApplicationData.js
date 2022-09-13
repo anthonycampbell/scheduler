@@ -1,4 +1,4 @@
-import { React, useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import Axios from "axios";
 const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
@@ -70,9 +70,7 @@ function useApplicationData() {
     };
     webSocket.onmessage = (event) => {
       const parsed = JSON.parse(event.data);
-      console.log(parsed);
       if (parsed.type === "SET_INTERVIEW") {
-        console.log('here');
         dispatch({ type: SET_INTERVIEW, id: parsed.id, interview: parsed.interview });
       }
     }

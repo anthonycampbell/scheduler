@@ -19,9 +19,8 @@ export default function Form(props) {
   const save = function (){
     if (interviewer){
       props.onSave(student, interviewer)
-    } else {
-      console.log('must select interviewer');
     }
+    //console.log('must select interviewer');
   }
 
   return (

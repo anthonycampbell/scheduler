@@ -1,12 +1,12 @@
-import { React, useState } from 'react';
+import { useState } from 'react';
 
 function useVisualMode(init) {
   const [mode, setMode] = useState(init);
-  const [history, setHistory] = useState([init]);
+  const setHistory = useState([init])[1];
 
   function transition(newmode, replace = false) {
     setHistory(prev => {
-      if (replace){
+      if (replace) {
         prev.pop()
       }
       prev.push(newmode);
