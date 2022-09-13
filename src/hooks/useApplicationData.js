@@ -25,7 +25,21 @@ function useApplicationData() {
           ...state.appointments,
           [id]: appointment
         };
-        setState(prev => { return { ...prev, appointments } });
+        const day = state.days.filter((d) => d.name === state.day)[0] //get the selected day object
+        const appointmentObjects = day.appointments.map((id) => { return appointments[id] });
+        const spots = appointmentObjects.reduce((prev, curr) => {
+          if (curr.interview === null) {
+            return prev + 1;
+          }
+          return prev + 0;
+        }, 0);
+        day.spots = spots
+        setState(prev => {
+          return {
+            ...prev,
+            appointments
+          }
+        });
         return res;
       });
   }
@@ -41,6 +55,15 @@ function useApplicationData() {
           ...state.appointments,
           [id]: appointment
         };
+        const day = state.days.filter((d) => d.name === state.day)[0] //get the selected day object
+        const appointmentObjects = day.appointments.map((id) => { return appointments[id] });
+        const spots = appointmentObjects.reduce((prev, curr) => {
+          if (curr.interview === null) {
+            return prev + 1;
+          }
+          return prev + 0;
+        }, 0);
+        day.spots = spots
         setState(prev => { return { ...prev, appointments } });
         return res;
       });
