@@ -1,42 +1,13 @@
 import { useEffect, useReducer } from "react";
 import Axios from "axios";
-const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+import reducer, {
+  SET_DAY,
+  SET_APPLICATION_DATA,
+  SET_INTERVIEW
+} from "reducers/application";
 
+const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 function useApplicationData() {
-  const SET_DAY = 'SET_DAY';
-  const SET_APPLICATION_DATA = 'SET_APPLICATION_DATA';
-  const SET_INTERVIEW = 'SET_INTERVIEW';
-  function reducer(state, action) {
-    switch (action.type) {
-      case SET_DAY:
-        return { ...state, day: action.value }
-      case SET_INTERVIEW:
-        const appointment = {
-          ...state.appointments[action.id],
-          interview: action.interview
-        };
-        const appointments = {
-          ...state.appointments,
-          [action.id]: appointment
-        };
-        const day = state.days.filter((d) => d.name === state.day)[0] //get the selected day object
-        const appointmentObjects = day.appointments.map((id) => { return appointments[id] });
-        const spots = appointmentObjects.reduce((prev, curr) => {
-          if (curr.interview === null) {
-            return prev + 1;
-          }
-          return prev + 0;
-        }, 0);
-        day.spots = spots
-        return { ...state, appointments }
-      case SET_APPLICATION_DATA:
-        return { ...state, days: action.value.days, appointments: action.value.appointments, interviewers: action.value.interviewers }
-      default:
-        throw new Error(
-          `Tried to reduce with unsupported action type: ${action.type}`
-        );
-    }
-  }
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
