@@ -78,9 +78,9 @@ function useApplicationData() {
   }, [])
 
   useEffect(() => {
-    const daysUrl = 'http://localhost:8001/api/days';
-    const appointmentsURL = 'http://localhost:8001/api/appointments';
-    const interviewersURL = 'http://localhost:8001/api/interviewers';
+    const daysUrl = '/api/days';
+    const appointmentsURL = '/api/appointments';
+    const interviewersURL = '/api/interviewers';
     Promise.all([Axios.get(daysUrl), Axios.get(appointmentsURL), Axios.get(interviewersURL)])
       .then((all) => {
         dispatch({
