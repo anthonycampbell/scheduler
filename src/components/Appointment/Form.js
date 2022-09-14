@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Button from 'components/Button';
 
 export default function Form(props) {
+  const [error, setError] = useState("");
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
 
@@ -16,11 +17,17 @@ export default function Form(props) {
     props.onCancel();
   }
 
-  const save = function (){
-    if (interviewer){
-      props.onSave(student, interviewer)
+  function validate() {
+    if (student === "") {
+      setError("Student name cannot be blank");
+      return;
     }
-    //console.log('must select interviewer');
+    if (interviewer === null) {
+      setError("Please select an interviewer");
+      return;
+    }
+    setError("");
+    props.onSave(student, interviewer);
   }
 
   return (
@@ -28,6 +35,7 @@ export default function Form(props) {
       <section className="appointment__card-left">
         <form autoComplete="off" onSubmit={(event) => event.preventDefault()}>
           <input
+            data-testid="student-name-input"
             className="appointment__create-input text--semi-bold"
             name="name"
             type="text"
@@ -36,6 +44,7 @@ export default function Form(props) {
             value={student}
           />
         </form>
+        <section className="appointment__validation">{error}</section>
         <InterviewerList
           value={interviewer}
           interviewers={props.interviewers}
@@ -45,7 +54,7 @@ export default function Form(props) {
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger message={"Cancel appointment?"} onClick={cancel}>Cancel</Button>
-          <Button confirm message={"Save appointment?"} onClick={save}>Save</Button>
+          <Button confirm message={"Save appointment?"} onClick={validate}>Save</Button>
         </section>
       </section>
     </main>
