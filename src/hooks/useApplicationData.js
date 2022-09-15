@@ -6,7 +6,7 @@ import reducer, {
   SET_INTERVIEW
 } from "reducers/application";
 
-const webSocket = new WebSocket("ws://localhost:8001");
+const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 function useApplicationData() {
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
