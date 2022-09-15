@@ -20,7 +20,7 @@ function useApplicationData() {
   }
 
   function bookInterview(id, interview) {
-    return Axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
+    return Axios.put(`/api/appointments/${id}`, { interview })
       .then((res) => {
         dispatch({ type: SET_INTERVIEW, id, interview });
         return res;
@@ -28,7 +28,7 @@ function useApplicationData() {
   }
 
   function cancelInterview(id) {
-    return Axios.delete(`http://localhost:8001/api/appointments/${id}`)
+    return Axios.delete(`/api/appointments/${id}`)
       .then((res) => {
         dispatch({ type: SET_INTERVIEW, id, interview: null });
         return res;
